@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>app</title>
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+
+
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+	<div class="container">
+      <div class="page-header">
+        <h1>Shopping list app</h1>
+      </div>
+    </div>
+
+    <div class="container add-block">
+    	<div class="row">
+    		<form id="addform">
+	    		<div class="col-sm-6 col-md-6">
+	    			<input class="form-control" name="product" type="text" required>
+	    		</div>
+	    		<div class="col-sm-2 col-md-2">
+	    			<input class="form-control" name="sum" type="text" required>
+	    		</div>
+	    		<div class="col-sm-4 col-md-4">
+	    			<input class="btn btn-primary" type="submit" value="Add to list">
+	    		</div>
+    		</form>
+    	</div>
+    </div>
+
+    <div class="container">
+    	<div class="table-responsive">
+    		<div class="col-md-8">
+				<table id="products" class="table table-hover text-left">
+					<thead>
+						<tr>
+							<th class="col-md-2">#</th>
+							<th class="col-md-8">Product name</th>
+							<th class="col-md-2">Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- products list -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+    </div>
+
+
+    <div class="container">
+    	<div class="source">view sourse</div>
+    	<div class="code-wrap">
+<pre style="background:#181818;color:#f8f8f8"><span style="color:#f9ee98">var</span> app;
+
+<span style="color:#f9ee98">function</span> <span style="color:#9b703f">app</span>() {
+    <span style="color:#7587a6">this</span>.prodList <span style="color:#cda869">=</span> [{
+        name: <span style="color:#8f9d6a">'Apple'</span>,
+        sum: <span style="color:#cf6a4c">3</span>,
+        done: <span style="color:#cf6a4c">false</span>
+    },{
+        name: <span style="color:#8f9d6a">'Bread'</span>,
+        sum: <span style="color:#cf6a4c">2</span>,
+        done: <span style="color:#cf6a4c">false</span>
+    },{
+        name: <span style="color:#8f9d6a">'Beer'</span>,
+        sum: <span style="color:#cf6a4c">12</span>,
+        done: <span style="color:#cf6a4c">true</span>
+    },{
+        name: <span style="color:#8f9d6a">'Сheese'</span>,
+        sum: <span style="color:#cf6a4c">6</span>,
+        done: <span style="color:#cf6a4c">false</span>
+    },{
+        name: <span style="color:#8f9d6a">'Pliers'</span>,
+        sum: <span style="color:#cf6a4c">1</span>,
+        done: <span style="color:#cf6a4c">false</span>
+    }];
+};
+
+<span style="color:#5f5a60;font-style:italic">// функция рендеринга таблицы покупок</span>
+<span style="color:#9b859d">app</span>.<span style="color:#cf6a4c">prototype</span>.<span style="color:#9b703f">renderList</span> <span style="color:#cda869">=</span> <span style="color:#f9ee98">function</span>() {
+
+    <span style="color:#f9ee98">var</span> arr   <span style="color:#cda869">=</span> <span style="color:#7587a6">this</span>.prodList;
+    <span style="color:#f9ee98">var</span> tbody <span style="color:#cda869">=</span> <span style="color:#cda869">$</span>(<span style="color:#8f9d6a">'#products tbody'</span>);
+
+    tbody.<span style="color:#cf6a4c">text</span>(<span style="color:#8f9d6a">''</span>);
+
+    <span style="color:#cda869">for</span> (<span style="color:#f9ee98">var</span> i <span style="color:#cda869">=</span> <span style="color:#cf6a4c">0</span>; i <span style="color:#cda869">&lt;</span> arr.<span style="color:#cf6a4c">length</span>; i<span style="color:#cda869">++</span>) {
+        
+        <span style="color:#f9ee98">var</span> elClass <span style="color:#cda869">=</span> arr[i].done ? <span style="color:#8f9d6a">' done'</span> : <span style="color:#8f9d6a">''</span>;
+    
+        tbody.append(<span style="color:#8f9d6a">'&lt;tr class="prodline '</span> <span style="color:#cda869">+</span> elClass <span style="color:#cda869">+</span> <span style="color:#8f9d6a">'">'</span> <span style="color:#cda869">+</span>
+            <span style="color:#8f9d6a">'&lt;td>&lt;span class="marker">&lt;/span>&lt;/td>'</span> <span style="color:#cda869">+</span>
+            <span style="color:#8f9d6a">'&lt;td>'</span> <span style="color:#cda869">+</span> arr[i].<span style="color:#cf6a4c">name</span> <span style="color:#cda869">+</span><span style="color:#8f9d6a">'&lt;/td>'</span> <span style="color:#cda869">+</span>
+            <span style="color:#8f9d6a">'&lt;td>'</span> <span style="color:#cda869">+</span> arr[i].sum <span style="color:#cda869">+</span><span style="color:#8f9d6a">'&lt;/td>'</span> <span style="color:#cda869">+</span>
+            <span style="color:#8f9d6a">'&lt;/tr>'</span>);
+    }
+    
+};
+
+<span style="color:#5f5a60;font-style:italic">// прослушка событий</span>
+<span style="color:#9b859d">app</span>.<span style="color:#cf6a4c">prototype</span>.<span style="color:#9b703f">initEvents</span> <span style="color:#cda869">=</span> <span style="color:#f9ee98">function</span> () {
+
+    <span style="color:#f9ee98">var</span> self <span style="color:#cda869">=</span> <span style="color:#7587a6">this</span>;
+    <span style="color:#f9ee98">var</span> list <span style="color:#cda869">=</span> <span style="color:#7587a6">this</span>.prodList;
+
+    <span style="color:#5f5a60;font-style:italic">// добавление продукта</span>
+    <span style="color:#cda869">$</span>(<span style="color:#9b859d">document</span>.<span style="color:#cf6a4c">body</span>).on(<span style="color:#8f9d6a">'submit'</span>, <span style="color:#8f9d6a">'#addform'</span>, <span style="color:#f9ee98">function</span> (e) {
+        
+        e.preventDefault();
+
+        <span style="color:#f9ee98">var</span> data <span style="color:#cda869">=</span> <span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>).serializeArray();
+
+        <span style="color:#5f5a60;font-style:italic">// если не заполнены поля - ничего не добавляем</span>
+        <span style="color:#cda869">if</span> (data[<span style="color:#cf6a4c">0</span>].<span style="color:#cf6a4c">value</span> <span style="color:#cda869">==</span> <span style="color:#8f9d6a">''</span> <span style="color:#cda869">||</span> data[<span style="color:#cf6a4c">1</span>].<span style="color:#cf6a4c">value</span> <span style="color:#cda869">==</span> <span style="color:#8f9d6a">''</span>) {
+            <span style="color:#cda869">return</span> <span style="color:#cf6a4c">false</span>
+        }
+        
+        <span style="color:#f9ee98">var</span> flag <span style="color:#cda869">=</span> <span style="color:#cf6a4c">true</span>;
+        <span style="color:#f9ee98">var</span> elem <span style="color:#cda869">=</span> {
+            name: data[<span style="color:#cf6a4c">0</span>].<span style="color:#cf6a4c">value</span>,
+            sum: data[<span style="color:#cf6a4c">1</span>].<span style="color:#cf6a4c">value</span>,
+            done: <span style="color:#cf6a4c">false</span>
+        };
+
+        <span style="color:#5f5a60;font-style:italic">// поиск продукта в списке с таким же названием</span>
+        <span style="color:#cda869">for</span> (<span style="color:#f9ee98">var</span> i <span style="color:#cda869">=</span> <span style="color:#cf6a4c">0</span>; i <span style="color:#cda869">&lt;</span> list.<span style="color:#cf6a4c">length</span>; i<span style="color:#cda869">++</span>) {
+            <span style="color:#cda869">if</span> (list[i].<span style="color:#cf6a4c">name</span> <span style="color:#cda869">==</span> data[<span style="color:#cf6a4c">0</span>].<span style="color:#cf6a4c">value</span>) {
+                flag <span style="color:#cda869">=</span> <span style="color:#cf6a4c">false</span>;
+                list[i].sum <span style="color:#cda869">=</span> <span style="color:#cda869">+</span>data[<span style="color:#cf6a4c">1</span>].<span style="color:#cf6a4c">value</span> <span style="color:#cda869">+</span> <span style="color:#cda869">+</span>list[i].sum;
+            }
+        }
+
+        <span style="color:#cda869">if</span> (flag) self.prodList.<span style="color:#dad085">push</span>(elem);
+        
+        self.renderList();
+
+    });
+
+    <span style="color:#5f5a60;font-style:italic">// пометить купленный продукт</span>
+    <span style="color:#cda869">$</span>(<span style="color:#9b859d">document</span>.<span style="color:#cf6a4c">body</span>).on(<span style="color:#8f9d6a">'click'</span>, <span style="color:#8f9d6a">'.prodline'</span>, <span style="color:#f9ee98">function</span>(e) {
+
+        <span style="color:#f9ee98">var</span> rem    <span style="color:#cda869">=</span> <span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>).hasClass(<span style="color:#8f9d6a">'done'</span>);
+        <span style="color:#f9ee98">var</span> elName <span style="color:#cda869">=</span> <span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>).<span style="color:#dad085">find</span>(<span style="color:#8f9d6a">'td:nth-child(2)'</span>).<span style="color:#cf6a4c">text</span>();
+        
+        rem ? <span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>).removeClass(<span style="color:#8f9d6a">'done'</span>) : <span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>).addClass(<span style="color:#8f9d6a">'done'</span>);
+
+        <span style="color:#cda869">for</span> (<span style="color:#f9ee98">var</span> i <span style="color:#cda869">=</span> <span style="color:#cf6a4c">0</span>; i <span style="color:#cda869">&lt;</span> list.<span style="color:#cf6a4c">length</span>; i<span style="color:#cda869">++</span>) {
+            <span style="color:#cda869">if</span> (list[i].<span style="color:#cf6a4c">name</span> <span style="color:#cda869">==</span> elName) {
+                rem ? list[i].done <span style="color:#cda869">=</span> <span style="color:#cf6a4c">false</span> : list[i].done <span style="color:#cda869">=</span> <span style="color:#cf6a4c">true</span>;
+            }
+        }
+    });
+
+};
+
+<span style="color:#5f5a60;font-style:italic">// инициализация</span>
+<span style="color:#9b859d">app</span>.<span style="color:#cf6a4c">prototype</span>.<span style="color:#9b703f">init</span> <span style="color:#cda869">=</span> <span style="color:#f9ee98">function</span>() {
+
+    <span style="color:#7587a6">this</span>.renderList();
+    <span style="color:#7587a6">this</span>.initEvents();
+
+};
+
+(<span style="color:#f9ee98">function</span>() {
+
+    <span style="color:#f9ee98">var</span> cart <span style="color:#cda869">=</span> <span style="color:#cda869">new</span> <span style="color:#9b703f">app</span>();
+
+    cart.init();
+
+})()
+</pre>  		
+
+
+    	</div>
+    </div>
+
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+body {
+	background: #f7f7f7;
+}
+.add-block {
+	margin-bottom: 40px;
+}
+.table>thead>tr>th {
+    border-bottom: none;
+}
+.table td {
+	cursor: pointer;
+}
+.form-control {
+	box-shadow: none;
+}
+.marker {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	border: 2px solid #337ab7;
+	display: block;
+	position: relative;
+}
+.done {
+	/*text-decoration: line-through;*/
+	color: #0A8;
+	background: #F2F9EF;
+}
+.done .marker {
+	border-color: #0A8;
+}
+.done .marker:after {
+	content: '\2714';
+	font-size: 16px;
+	line-height: 26px;
+	position: absolute;
+	position: absolute;
+	top: -1px;
+	left: 6px;
+	color: #0A8;
+	fill: #0A8;
+}
+.table tbody>tr>td{
+    vertical-align: middle;
+}
+.code-wrap {
+	display: none;
+}
+.source {
+	margin: 30px 10px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.source:hover {
+	text-decoration: none;
+}
+
+@media (max-width: 767px) { 
+	input {
+		margin-bottom: 10px;
+	}
+	h1 {
+		font-size: 28px;
+	}
+	.add-block {
+		margin-bottom: 20px;
+	}
+	.done .marker:after {
+
+	}
+}
