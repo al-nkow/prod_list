@@ -47,8 +47,9 @@
 					<thead>
 						<tr>
 							<th class="col-md-2">#</th>
-							<th class="col-md-8">Product name</th>
+							<th class="col-md-7">Product name</th>
 							<th class="col-md-2">Amount</th>
+							<th class="col-md-1"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -62,8 +63,7 @@
 
     <div class="container">
     	<div class="source">view sourse</div>
-    	<div class="code-wrap">
-<pre style="background:#181818;color:#f8f8f8"><span style="color:#f9ee98">var</span> app;
+    	<div class="code-wrap"><pre style="background:#181818;color:#f8f8f8"><span style="color:#f9ee98">var</span> app;
 
 <span style="color:#f9ee98">function</span> <span style="color:#9b703f">app</span>() {
     <span style="color:#7587a6">this</span>.prodList <span style="color:#cda869">=</span> [{
@@ -103,25 +103,19 @@
     
         tbody.append(<span style="color:#8f9d6a">'&lt;tr class="prodline '</span> <span style="color:#cda869">+</span> elClass <span style="color:#cda869">+</span> <span style="color:#8f9d6a">'">'</span> <span style="color:#cda869">+</span>
             <span style="color:#8f9d6a">'&lt;td>&lt;span class="marker">&lt;/span>&lt;/td>'</span> <span style="color:#cda869">+</span>
-            <span style="color:#8f9d6a">'&lt;td>'</span> <span style="color:#cda869">+</span> arr[i].<span style="color:#cf6a4c">name</span> <span style="color:#cda869">+</span><span style="color:#8f9d6a">'&lt;/td>'</span> <span style="color:#cda869">+</span>
-            <span style="color:#8f9d6a">'&lt;td>'</span> <span style="color:#cda869">+</span> arr[i].sum <span style="color:#cda869">+</span><span style="color:#8f9d6a">'&lt;/td>'</span> <span style="color:#cda869">+</span>
+            <span style="color:#8f9d6a">'&lt;td>'</span> <span style="color:#cda869">+</span> arr[i].<span style="color:#cf6a4c">name</span> <span style="color:#cda869">+</span> <span style="color:#8f9d6a">'&lt;/td>'</span> <span style="color:#cda869">+</span>
+            <span style="color:#8f9d6a">'&lt;td>'</span> <span style="color:#cda869">+</span> arr[i].sum <span style="color:#cda869">+</span> <span style="color:#8f9d6a">'&lt;/td>'</span> <span style="color:#cda869">+</span>
+            <span style="color:#8f9d6a">'&lt;td>&lt;span class="delete">&lt;/span>&lt;/td>'</span> <span style="color:#cda869">+</span>
             <span style="color:#8f9d6a">'&lt;/tr>'</span>);
     }
     
 };
 
-<span style="color:#5f5a60;font-style:italic">// прослушка событий</span>
-<span style="color:#9b859d">app</span>.<span style="color:#cf6a4c">prototype</span>.<span style="color:#9b703f">initEvents</span> <span style="color:#cda869">=</span> <span style="color:#f9ee98">function</span> () {
-
-    <span style="color:#f9ee98">var</span> self <span style="color:#cda869">=</span> <span style="color:#7587a6">this</span>;
-    <span style="color:#f9ee98">var</span> list <span style="color:#cda869">=</span> <span style="color:#7587a6">this</span>.prodList;
-
-    <span style="color:#5f5a60;font-style:italic">// добавление продукта</span>
-    <span style="color:#cda869">$</span>(<span style="color:#9b859d">document</span>.<span style="color:#cf6a4c">body</span>).on(<span style="color:#8f9d6a">'submit'</span>, <span style="color:#8f9d6a">'#addform'</span>, <span style="color:#f9ee98">function</span> (e) {
+<span style="color:#5f5a60;font-style:italic">// функция добавления продукта в список</span>
+<span style="color:#9b859d">app</span>.<span style="color:#cf6a4c">prototype</span>.<span style="color:#9b703f">addProduct</span> <span style="color:#cda869">=</span> <span style="color:#f9ee98">function</span>(form) {
         
-        e.preventDefault();
-
-        <span style="color:#f9ee98">var</span> data <span style="color:#cda869">=</span> <span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>).serializeArray();
+        <span style="color:#f9ee98">var</span> data <span style="color:#cda869">=</span> form.serializeArray();
+        <span style="color:#f9ee98">var</span> list <span style="color:#cda869">=</span> <span style="color:#7587a6">this</span>.prodList;
 
         <span style="color:#5f5a60;font-style:italic">// если не заполнены поля - ничего не добавляем</span>
         <span style="color:#cda869">if</span> (data[<span style="color:#cf6a4c">0</span>].<span style="color:#cf6a4c">value</span> <span style="color:#cda869">==</span> <span style="color:#8f9d6a">''</span> <span style="color:#cda869">||</span> data[<span style="color:#cf6a4c">1</span>].<span style="color:#cf6a4c">value</span> <span style="color:#cda869">==</span> <span style="color:#8f9d6a">''</span>) {
@@ -143,25 +137,69 @@
             }
         }
 
-        <span style="color:#cda869">if</span> (flag) self.prodList.<span style="color:#dad085">push</span>(elem);
+        <span style="color:#cda869">if</span> (flag) <span style="color:#7587a6">this</span>.prodList.<span style="color:#dad085">push</span>(elem);
         
-        self.renderList();
+        <span style="color:#7587a6">this</span>.renderList();
+}
 
+<span style="color:#5f5a60;font-style:italic">// отметить покупку</span>
+<span style="color:#9b859d">app</span>.<span style="color:#cf6a4c">prototype</span>.<span style="color:#9b703f">markList</span> <span style="color:#cda869">=</span> <span style="color:#f9ee98">function</span> (el) {
+
+    <span style="color:#f9ee98">var</span> rem    <span style="color:#cda869">=</span> el.hasClass(<span style="color:#8f9d6a">'done'</span>);
+    <span style="color:#f9ee98">var</span> elName <span style="color:#cda869">=</span> el.<span style="color:#dad085">find</span>(<span style="color:#8f9d6a">'td:nth-child(2)'</span>).<span style="color:#cf6a4c">text</span>();
+    <span style="color:#f9ee98">var</span> list   <span style="color:#cda869">=</span> <span style="color:#7587a6">this</span>.prodList;
+    
+    rem ? el.removeClass(<span style="color:#8f9d6a">'done'</span>) : el.addClass(<span style="color:#8f9d6a">'done'</span>);
+
+    <span style="color:#cda869">for</span> (<span style="color:#f9ee98">var</span> i <span style="color:#cda869">=</span> <span style="color:#cf6a4c">0</span>; i <span style="color:#cda869">&lt;</span> list.<span style="color:#cf6a4c">length</span>; i<span style="color:#cda869">++</span>) {
+        <span style="color:#cda869">if</span> (list[i].<span style="color:#cf6a4c">name</span> <span style="color:#cda869">==</span> elName) {
+            rem ? list[i].done <span style="color:#cda869">=</span> <span style="color:#cf6a4c">false</span> : list[i].done <span style="color:#cda869">=</span> <span style="color:#cf6a4c">true</span>;
+        }
+    }
+}
+
+<span style="color:#5f5a60;font-style:italic">// удалить покупку</span>
+<span style="color:#9b859d">app</span>.<span style="color:#cf6a4c">prototype</span>.<span style="color:#9b703f">deleteItem</span> <span style="color:#cda869">=</span> <span style="color:#f9ee98">function</span> (el) {
+
+    <span style="color:#f9ee98">var</span> cur     <span style="color:#cda869">=</span> el.closest(<span style="color:#8f9d6a">'tr'</span>)
+    <span style="color:#f9ee98">var</span> elName <span style="color:#cda869">=</span> cur.<span style="color:#dad085">find</span>(<span style="color:#8f9d6a">'td:nth-child(2)'</span>).<span style="color:#cf6a4c">text</span>();
+    <span style="color:#f9ee98">var</span> list   <span style="color:#cda869">=</span> <span style="color:#7587a6">this</span>.prodList;
+    
+    cur.<span style="color:#dad085">remove</span>();
+    
+    <span style="color:#cda869">for</span> (<span style="color:#f9ee98">var</span> i <span style="color:#cda869">=</span> <span style="color:#cf6a4c">0</span>; i <span style="color:#cda869">&lt;</span> list.<span style="color:#cf6a4c">length</span>; i<span style="color:#cda869">++</span>) {
+        <span style="color:#cda869">if</span> (list[i].<span style="color:#cf6a4c">name</span> <span style="color:#cda869">==</span> elName) {
+            list.<span style="color:#dad085">splice</span>(i,<span style="color:#cf6a4c">1</span>);
+        }
+    }
+}
+
+<span style="color:#5f5a60;font-style:italic">// прослушка событий</span>
+<span style="color:#9b859d">app</span>.<span style="color:#cf6a4c">prototype</span>.<span style="color:#9b703f">initEvents</span> <span style="color:#cda869">=</span> <span style="color:#f9ee98">function</span> () {
+
+    <span style="color:#f9ee98">var</span> self <span style="color:#cda869">=</span> <span style="color:#7587a6">this</span>;
+    <span style="color:#f9ee98">var</span> list <span style="color:#cda869">=</span> <span style="color:#7587a6">this</span>.prodList;
+
+    <span style="color:#5f5a60;font-style:italic">// добавление продукта</span>
+    <span style="color:#cda869">$</span>(<span style="color:#9b859d">document</span>.<span style="color:#cf6a4c">body</span>).on(<span style="color:#8f9d6a">'submit'</span>, <span style="color:#8f9d6a">'#addform'</span>, <span style="color:#f9ee98">function</span> (e) {      
+        e.preventDefault();
+        self.addProduct(<span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>));
     });
 
     <span style="color:#5f5a60;font-style:italic">// пометить купленный продукт</span>
     <span style="color:#cda869">$</span>(<span style="color:#9b859d">document</span>.<span style="color:#cf6a4c">body</span>).on(<span style="color:#8f9d6a">'click'</span>, <span style="color:#8f9d6a">'.prodline'</span>, <span style="color:#f9ee98">function</span>(e) {
+        self.markList(<span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>));
+    });
 
-        <span style="color:#f9ee98">var</span> rem    <span style="color:#cda869">=</span> <span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>).hasClass(<span style="color:#8f9d6a">'done'</span>);
-        <span style="color:#f9ee98">var</span> elName <span style="color:#cda869">=</span> <span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>).<span style="color:#dad085">find</span>(<span style="color:#8f9d6a">'td:nth-child(2)'</span>).<span style="color:#cf6a4c">text</span>();
-        
-        rem ? <span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>).removeClass(<span style="color:#8f9d6a">'done'</span>) : <span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>).addClass(<span style="color:#8f9d6a">'done'</span>);
+    <span style="color:#5f5a60;font-style:italic">// удалить элемент</span>
+    <span style="color:#cda869">$</span>(<span style="color:#9b859d">document</span>.<span style="color:#cf6a4c">body</span>).on(<span style="color:#8f9d6a">'click'</span>, <span style="color:#8f9d6a">'.delete'</span>, <span style="color:#f9ee98">function</span>(e) {
+        e.stopPropagation();
+        self.deleteItem(<span style="color:#cda869">$</span>(<span style="color:#7587a6">this</span>));       
+    });
 
-        <span style="color:#cda869">for</span> (<span style="color:#f9ee98">var</span> i <span style="color:#cda869">=</span> <span style="color:#cf6a4c">0</span>; i <span style="color:#cda869">&lt;</span> list.<span style="color:#cf6a4c">length</span>; i<span style="color:#cda869">++</span>) {
-            <span style="color:#cda869">if</span> (list[i].<span style="color:#cf6a4c">name</span> <span style="color:#cda869">==</span> elName) {
-                rem ? list[i].done <span style="color:#cda869">=</span> <span style="color:#cf6a4c">false</span> : list[i].done <span style="color:#cda869">=</span> <span style="color:#cf6a4c">true</span>;
-            }
-        }
+    <span style="color:#5f5a60;font-style:italic">// скрыть/показать код</span>
+    <span style="color:#cda869">$</span>(<span style="color:#9b859d">document</span>.<span style="color:#cf6a4c">body</span>).on(<span style="color:#8f9d6a">'click'</span>, <span style="color:#8f9d6a">'.source'</span>, <span style="color:#f9ee98">function</span>(e) {
+        <span style="color:#cda869">$</span>(<span style="color:#8f9d6a">'.code-wrap'</span>).toggle();
     });
 
 };
@@ -181,10 +219,8 @@
     cart.init();
 
 })()
-</pre>  		
-
-
-    	</div>
+</pre>
+		</div> 
     </div>
 
 

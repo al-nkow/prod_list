@@ -54,6 +54,23 @@ body {
 .source:hover {
 	text-decoration: none;
 }
+.delete {
+	display: block;
+	width: 20px;
+	height: 20px;
+	position: relative; 
+}
+.delete:after {
+	content: '\2716';
+	position: absolute;
+	line-height: 20px;
+	top: 0;
+	left: 3px;
+}
+pre {
+	font-size: 14px;
+	padding: 20px;
+}
 
 @media (max-width: 767px) { 
 	input {
